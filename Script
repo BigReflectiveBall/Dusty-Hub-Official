@@ -1,1 +1,1333 @@
+local Library = loadstring(game:HttpGetAsync("https://raw.githubusercontent.com/L3nyFromV3rm/Leny-UI/refs/heads/main/Library.lua", true))()
 
+Library.new({
+	sizeX = 770,
+	sizeY = 600,
+	title = "Dusty Hub",
+	tabWidth = 200, -- (72 for icons only)
+	PrimaryBackgroundColor = Library.Theme.PrimaryBackgroundColor,
+	SecondaryBackgroundColor = Library.Theme.SecondaryBackgroundColor,
+	TertiaryBackgroundColor = Library.Theme.TertiaryBackgroundColor,
+	TabBackgroundColor = Library.Theme.TabBackgroundColor,
+	PrimaryTextColor = Library.Theme.PrimaryTextColor,
+	SecondaryTextColor = Library.Theme.SecondaryTextColor,
+	PrimaryColor = Library.Theme.PrimaryColor,
+	ScrollingBarImageColor = Library.Theme.ScrollingBarImageColor,
+	Line = Library.Theme.Line,
+})
+
+Library:notify({
+	title = "Dusty Hub",
+	text = "Welcome! to get our premium version head over to the discord link at the home tab.",
+	maxSizeX = 300,
+	scaleX = 0.165,
+	sizeY = 200,
+})
+
+local Main = Library:createLabel({text = "Drive Cars Down A Hill"})
+
+local Tab = Library:createTab({
+	text = "Home",
+	icon = "124718082122263", -- 20x20 icon you want here
+})
+
+local Page1 = Tab:createSubTab({
+	text = "Home",
+	sectionStyle = "Double", -- Make the page a single section style or double, "Single", "Double"
+})
+
+local Section = Page1:createSection({
+	text = "Script Made By DH",
+	position = "Left",
+})
+
+Section:createButton({
+	text = "Copy Discord Invite Link",
+	callback = function()
+	setclipboard("https://discord.gg/Xkajkkbu")
+		print("copied invite link")
+	end
+})
+
+
+local Section = Page1:createSection({
+	text = "Camera Mods",
+	position = "Right",
+})
+
+Section:createSlider({
+	text = "Fov Changer",
+	min = 70,
+	max = 120,
+	step = 0, 
+	callback = function(value)
+		
+		local camera = game.Workspace.CurrentCamera
+		camera.FieldOfView = value
+		print("FOV set to:", value)
+	end
+})
+
+Section:createToggle({
+	text = "Black Screen Toggle",
+	state = false,
+	callback = function(state)
+		local screen = game.Players.LocalPlayer.PlayerGui:FindFirstChild("BlackScreen")
+		
+		if state then
+			if not screen then
+				screen = Instance.new("ScreenGui")
+				screen.Name = "BlackScreen"
+				screen.IgnoreGuiInset = true
+				screen.Parent = game.Players.LocalPlayer.PlayerGui
+
+				local blackFrame = Instance.new("Frame")
+				blackFrame.Size = UDim2.new(1, 0, 1, 0)
+				blackFrame.BackgroundColor3 = Color3.new(0, 0, 0)
+				blackFrame.BorderSizePixel = 0
+				blackFrame.Parent = screen
+			end
+		else
+			if screen then
+				screen:Destroy()
+			end
+		end
+	end
+})
+
+Section:createToggle({
+	text = "White Screen Toggle",
+	state = false,
+	callback = function(state)
+		local screen = game.Players.LocalPlayer.PlayerGui:FindFirstChild("WhiteScreen")
+		
+		if state then
+			if not screen then
+				screen = Instance.new("ScreenGui")
+				screen.Name = "WhiteScreen"
+				screen.IgnoreGuiInset = true
+				screen.Parent = game.Players.LocalPlayer.PlayerGui
+
+				local whiteFrame = Instance.new("Frame")
+				whiteFrame.Size = UDim2.new(1, 0, 1, 0)
+				whiteFrame.BackgroundColor3 = Color3.new(1, 1, 1)
+				whiteFrame.BorderSizePixel = 0
+				whiteFrame.Parent = screen
+			end
+		else
+			if screen then
+				screen:Destroy()
+			end
+		end
+	end
+})
+
+Section:createToggle({
+	text = "Blur Screen Toggle",
+	state = false,
+	callback = function(state)
+		local screen = game.Players.LocalPlayer.PlayerGui:FindFirstChild("BlurScreen")
+		
+		if state then
+			if not screen then
+				screen = Instance.new("ScreenGui")
+				screen.Name = "BlurScreen"
+				screen.IgnoreGuiInset = true
+				screen.Parent = game.Players.LocalPlayer.PlayerGui
+
+				local blurFrame = Instance.new("Frame")
+				blurFrame.Size = UDim2.new(1, 0, 1, 0)
+				blurFrame.BackgroundColor3 = Color3.new(1, 1, 1)
+				blurFrame.BackgroundTransparency = 0.8
+				blurFrame.BorderSizePixel = 0
+				blurFrame.Parent = screen
+				
+				local blurEffect = Instance.new("BlurEffect")
+				blurEffect.Parent = game.Lighting
+				blurEffect.Size = 24 -- You can adjust the blur level
+			end
+		else
+			if screen then
+				screen:Destroy()
+			end
+			local blurEffect = game.Lighting:FindFirstChildOfClass("BlurEffect")
+			if blurEffect then
+				blurEffect:Destroy()
+			end
+		end
+	end
+})
+
+
+local Section = Page1:createSection({
+	text = "Character",
+	position = "Left",
+})
+
+Section:createKeybind({
+	onHeld = false,
+	text = "Character Reset",
+	default = "z",
+	callback = function(keyName)
+		print(keyName)
+		local character = game.Players.LocalPlayer.Character
+		if character then
+			-- Reset character by destroying and respawning it
+			local humanoid = character:FindFirstChild("Humanoid")
+			if humanoid then
+				humanoid.Health = 0  -- Causes the character to "die" and respawn
+			end
+		end
+	end
+})
+
+Section:createButton({
+	text = "Teleport To Shop",
+	callback = function()
+	local TS = game:GetService("TweenService")
+    local tween = TS:Create(game.Players.LocalPlayer.Character.HumanoidRootPart, TweenInfo.new(0.2), {CFrame = CFrame.new(-88.56073, 516.557251, 67.275589)})
+    tween:Play()
+		print("Successfully TP")
+	end
+})
+
+
+local Tab = Library:createTab({
+	text = "Main",
+	icon = "124718082122263", -- 20x20 icon you want here
+})
+
+local Page1 = Tab:createSubTab({
+	text = "Main",
+	sectionStyle = "Double", -- Make the page a single section style or double, "Single", "Double"
+})
+
+local Section = Page1:createSection({
+	text = "Tweens",
+	position = "Left",
+})
+
+Section:createButton({
+	text = "Desert Dunes Tween",
+	callback = function()
+	local TS = game:GetService("TweenService")
+    local tween = TS:Create(game.Players.LocalPlayer.Character.HumanoidRootPart, TweenInfo.new(2), {CFrame = CFrame.new(-74.3534546, -2584.6853, 26867.1641)})
+    tween:Play()
+		print("Tween Successful")
+	end
+})
+
+Section:createButton({
+	text = "Bunk Laps Tween",
+	callback = function()
+	local TS = game:GetService("TweenService")
+    local tween = TS:Create(game.Players.LocalPlayer.Character.HumanoidRootPart, TweenInfo.new(2), {CFrame = CFrame.new(-169.571762, -6045.90381, 36790.7148)})
+    tween:Play()
+		print("Tween Successful")
+	end
+})
+
+Section:createButton({
+	text = "Hydro Chapter Tween",
+	callback = function()
+	local TS = game:GetService("TweenService")
+    local tween = TS:Create(game.Players.LocalPlayer.Character.HumanoidRootPart, TweenInfo.new(2), {CFrame = CFrame.new(-1602.66553, -4219.72412, 30125.207)})
+    tween:Play()
+		print("Tween Successful")
+	end
+})
+
+
+local Section = Page1:createSection({
+	text = "Server",
+	position = "Right",
+})
+
+Section:createButton({
+	text = "Teleport To 1st World",
+	callback = function()
+		local TeleportService = game:GetService("TeleportService")
+		local placeId = 9414511685 -- Replace this with your target place ID
+		local player = game.Players.LocalPlayer
+		
+		TeleportService:Teleport(placeId, player)
+		print("Successfully Teleported")
+	end
+})
+
+Section:createButton({
+	text = "Teleport To 2nd World",
+	callback = function()
+		local TeleportService = game:GetService("TeleportService")
+		local placeId = 12204694796 -- Replace this with your target place ID
+		local player = game.Players.LocalPlayer
+		
+		TeleportService:Teleport(placeId, player)
+		print("Successfully Teleported")
+	end
+})
+
+Section:createButton({
+	text = "Teleport To 3rd World",
+	callback = function()
+		local TeleportService = game:GetService("TeleportService")
+		local placeId = 12204717117 -- Replace this with your target place ID
+		local player = game.Players.LocalPlayer
+		
+		TeleportService:Teleport(placeId, player)
+		print("Successfully Teleported")
+	end
+})
+
+local TeleportService = game:GetService("TeleportService")
+local Players = game:GetService("Players")
+
+Section:createButton({
+    text = "Rejoin Server",
+    callback = function()
+        
+        local player = Players.LocalPlayer
+        local placeId = game.PlaceId
+        local jobId = game.JobId
+
+        
+        TeleportService:TeleportToPlaceInstance(placeId, jobId, player)
+        print("Successfully Rejoined")
+    end
+})
+
+
+local Section = Page1:createSection({
+	text = "Modifiers",
+	position = "Left",
+})
+
+local Players = game:GetService("Players")
+
+local function activateInvincibility()
+    local character = Players.LocalPlayer.Character
+    if character and character:FindFirstChild("Humanoid") then
+        local humanoid = character:FindFirstChild("Humanoid")
+        humanoid.MaxHealth = 48458845454567547457476774
+        humanoid.Health = 48458845454567547457476774
+    end
+end
+
+local function deactivateInvincibility()
+    local character = Players.LocalPlayer.Character
+    if character and character:FindFirstChild("Humanoid") then
+        local humanoid = character:FindFirstChild("Humanoid")
+        humanoid.MaxHealth = 100  -- Default max health (you can adjust this)
+        humanoid.Health = humanoid.MaxHealth  -- Restore to full health
+    end
+end
+
+Section:createToggle({
+    text = "Invincibility",
+    state = false,
+    callback = function(state)
+        print("Invincibility Toggled: " .. tostring(state))
+        if state then
+            activateInvincibility()
+        else
+            deactivateInvincibility()
+        end
+    end
+})
+
+
+
+
+
+
+
+local Tab = Library:createTab({
+	text = "Player",
+	icon = "124718082122263", -- 20x20 icon you want here
+})
+
+local Page1 = Tab:createSubTab({
+	text = "Player",
+	sectionStyle = "Double", -- Make the page a single section style or double, "Single", "Double"
+})
+
+local Section = Page1:createSection({
+	text = "Movement",
+	position = "Left",
+})
+
+Section:createSlider({
+	text = "Speed Multiplier",
+	min = 16, 
+	max = 250, 
+	step = 0, 
+	callback = function(value)
+		
+		local player = game.Players.LocalPlayer
+		local character = player.Character or player.CharacterAdded:Wait()
+
+		local humanoid = character:FindFirstChildOfClass("Humanoid")
+
+		if humanoid then
+			
+			humanoid.WalkSpeed = value
+			print("WalkSpeed set to:", value)
+		else
+			warn("Humanoid not found!")
+		end
+	end
+})
+
+
+Section:createSlider({
+	text = "JumpBoost Multiplier",
+	min = 50, 
+	max = 250, 
+	step = 0, 
+	callback = function(value)
+		
+		local player = game.Players.LocalPlayer
+		local character = player.Character or player.CharacterAdded:Wait()
+
+		local humanoid = character:FindFirstChildOfClass("Humanoid")
+
+		if humanoid then
+			
+			humanoid.JumpPower = value
+			print("JumpPower set to:", value)
+		else
+			warn("Humanoid not found!")
+		end
+	end
+})
+
+
+
+local autoJumpEnabled = false
+local autoJumpDelay = 1
+
+local function startAutoJump()
+    while autoJumpEnabled do
+        local player = game.Players.LocalPlayer
+        local character = player.Character or player.CharacterAdded:Wait()
+        local humanoid = character:FindFirstChildOfClass("Humanoid")
+
+        if humanoid then
+            humanoid:ChangeState(Enum.HumanoidStateType.Jumping)
+            print("Jumped!")
+        end
+
+        task.wait(autoJumpDelay)
+    end
+end
+
+Section:createSlider({
+    text = "Autojump Delay",
+    min = 0,
+    max = 25,
+    step = 1,
+    callback = function(value)
+        autoJumpDelay = value
+        print("Autojump Delay set to:", value)
+    end
+})
+
+Section:createToggle({
+    text = "Auto Jump",
+    state = false,
+    callback = function(state)
+        autoJumpEnabled = state
+        print("Auto Jump state:", state)
+
+        if state then
+            task.spawn(startAutoJump)
+        end
+    end
+})
+
+
+local Section = Page1:createSection({
+	text = "Spectate",
+	position = "Right",
+})
+
+local Players = game:GetService("Players")
+
+-- Variable to store the current camera state
+local selectedPlayer = nil
+
+-- Store the dropdown once to avoid creating multiple dropdowns
+local playerDropdown
+
+-- Function to update the dropdown list with player names
+local function updatePlayerList()
+    local playerList = {}
+    for _, player in pairs(Players:GetPlayers()) do
+        table.insert(playerList, player.Name)
+    end
+
+    -- If the dropdown already exists, just update the list
+    if playerDropdown then
+        playerDropdown:updateList({
+            list = playerList,
+            default = {"None"}
+        })
+    else
+        -- Create a new dropdown only if it hasn't been created yet
+        playerDropdown = Section:createDropdown({
+            text = "Player List",
+            list = playerList,
+            default = {"None"},
+            multiple = false,
+            callback = function(value)
+                print("Selected Player: " .. value)
+                selectedPlayer = value
+            end
+        })
+    end
+end
+
+-- Update the list initially and whenever a player joins or leaves
+Players.PlayerAdded:Connect(updatePlayerList)
+Players.PlayerRemoving:Connect(updatePlayerList)
+
+-- Call the function initially to populate the dropdown
+updatePlayerList()
+
+-- Button to spectate the selected player
+Section:createButton({
+    text = "View Player",
+    callback = function()
+        if selectedPlayer then
+            -- Find the player by name
+            local player = Players:FindFirstChild(selectedPlayer)
+            if player and player.Character then
+                -- Ensure the character has a humanoid
+                local character = player.Character
+                if character:FindFirstChild("Humanoid") then
+                    -- Set the camera to spectate the selected player's humanoid
+                    local camera = game.Workspace.CurrentCamera
+                    camera.CameraSubject = character.Humanoid
+                    camera.CameraType = Enum.CameraType.Attach
+                    print("Successfully Viewed The Player: " .. selectedPlayer)
+                else
+                    print("The selected player does not have a humanoid!")
+                end
+            else
+                print("Player not found or player has no character!")
+            end
+        else
+            print("No player selected.")
+        end
+    end
+})
+
+-- Button to stop viewing and return the camera to the player's character
+Section:createButton({
+    text = "Stop Viewing",
+    callback = function()
+        local player = Players.LocalPlayer
+        if player and player.Character then
+            -- Set the camera to follow your character's humanoid
+            local camera = game.Workspace.CurrentCamera
+            camera.CameraSubject = player.Character.Humanoid
+            camera.CameraType = Enum.CameraType.Custom  -- Reset to normal camera type
+            print("Successfully Stopped Viewing")
+        else
+            print("Player or character not found!")
+        end
+    end
+})
+
+
+local Section = Page1:createSection({
+	text = "Teleport",
+	position = "Left",
+})
+
+local Players = game:GetService("Players")
+local TweenService = game:GetService("TweenService")
+local playerDropdown
+
+local selectedPlayer = nil
+
+-- Function to update the dropdown list with player names
+local function updatePlayerList()
+    local playerList = {}
+    for _, player in pairs(Players:GetPlayers()) do
+        table.insert(playerList, player.Name)
+    end
+
+    -- If the dropdown already exists, just update the list
+    if playerDropdown then
+        playerDropdown:updateList({
+            list = playerList,
+            default = {"None"}
+        })
+    else
+        -- Create a new dropdown only if it hasn't been created yet
+        playerDropdown = Section:createDropdown({
+            text = "Player List",
+            list = playerList,
+            default = {"None"},
+            multiple = false,
+            callback = function(value)
+                print("Selected Player: " .. value)
+                selectedPlayer = value
+            end
+        })
+    end
+end
+
+-- Update the list initially and whenever a player joins or leaves
+Players.PlayerAdded:Connect(updatePlayerList)
+Players.PlayerRemoving:Connect(updatePlayerList)
+
+-- Call the function initially to populate the dropdown
+updatePlayerList()
+
+-- Button to teleport to the selected player using TweenService
+Section:createButton({
+    text = "Teleport To Player", 
+    callback = function()
+        if selectedPlayer then
+            -- Find the player by name
+            local player = Players:FindFirstChild(selectedPlayer)
+            if player and player.Character then
+                local character = player.Character
+                if character:FindFirstChild("HumanoidRootPart") then
+                    -- Get the position of the selected player's HumanoidRootPart
+                    local targetPosition = character.HumanoidRootPart.Position
+
+                    -- Get the local player's character and humanoid root part
+                    local playerCharacter = Players.LocalPlayer.Character
+                    if playerCharacter then
+                        local humanoidRootPart = playerCharacter:FindFirstChild("HumanoidRootPart")
+                        if humanoidRootPart then
+                            -- Create the tween to move the player's character to the selected player's position
+                            local tween = TweenService:Create(humanoidRootPart, TweenInfo.new(0.5), {CFrame = CFrame.new(targetPosition)})
+                            tween:Play()
+
+                            -- Wait for the tween to finish
+                            tween.Completed:Connect(function()
+                                print("Successfully Teleported to Player: " .. selectedPlayer)
+                            end)
+                        end
+                    end
+                else
+                    print("Selected player has no HumanoidRootPart!")
+                end
+            else
+                print("Player not found or player has no character!")
+            end
+        else
+            print("No player selected.")
+        end
+    end
+})
+
+
+
+local Tab = Library:createTab({
+	text = "Visual",
+	icon = "124718082122263", -- 20x20 icon you want here
+})
+
+local Page1 = Tab:createSubTab({
+	text = "Visual",
+	sectionStyle = "Double", -- Make the page a single section style or double, "Single", "Double"
+})
+
+local Section = Page1:createSection({
+	text = "ESP",
+	position = "Left",
+})
+
+local espBoxes = {}
+local espNames = {}
+local espDistances = {}
+local espColor = Color3.fromRGB(255, 255, 255) -- Default ESP color
+
+local function CreateBox()
+    local box = Drawing.new("Square")
+    box.Visible = false
+    box.Color = espColor -- Set to current ESP color
+    box.Thickness = 1
+    box.Transparency = 1
+    box.Filled = false
+    return box
+end
+
+local function CreateText()
+    local text = Drawing.new("Text")
+    text.Visible = false
+    text.Color = espColor -- Set to current ESP color
+    text.Size = 13
+    text.Center = true
+    text.Outline = true
+    return text
+end
+
+local function GetBoxPositions(character)
+    local humanoidRootPart = character:FindFirstChild("HumanoidRootPart")
+    if not humanoidRootPart then return nil end
+
+    local cframe = humanoidRootPart.CFrame
+    local size = character:GetExtentsSize()
+
+    local vertices = {
+        Vector3.new(-size.X / 2, size.Y / 2, 0),
+        Vector3.new(size.X / 2, size.Y / 2, 0),
+        Vector3.new(size.X / 2, -size.Y / 2, 0),
+        Vector3.new(-size.X / 2, -size.Y / 2, 0)
+    }
+
+    local corners = {}
+    local onScreen = true
+
+    for _, vertex in ipairs(vertices) do
+        local worldPosition = cframe * vertex
+        local screenPosition, isOnScreen = game.Workspace.CurrentCamera:WorldToViewportPoint(worldPosition)
+        if not isOnScreen then
+            onScreen = false
+            break
+        end
+        table.insert(corners, Vector2.new(screenPosition.X, screenPosition.Y))
+    end
+
+    return onScreen and corners or nil
+end
+
+local boxEnabled = false
+local nameEnabled = false
+local distanceEnabled = false
+
+local function UpdateESP()
+    for _, player in ipairs(game.Players:GetPlayers()) do
+        if player == game.Players.LocalPlayer then continue end
+
+        if not espBoxes[player] then
+            espBoxes[player] = CreateBox()
+            espNames[player] = CreateText()
+            espDistances[player] = CreateText()
+        end
+
+        local box = espBoxes[player]
+        local nameText = espNames[player]
+        local distanceText = espDistances[player]
+        local character = player.Character
+
+        if not character then
+            box.Visible = false
+            nameText.Visible = false
+            distanceText.Visible = false
+            continue
+        end
+
+        local corners = GetBoxPositions(character)
+
+        if corners then
+            local minX = math.huge
+            local minY = math.huge
+            local maxX = -math.huge
+            local maxY = -math.huge
+
+            for _, corner in ipairs(corners) do
+                minX = math.min(minX, corner.X)
+                minY = math.min(minY, corner.Y)
+                maxX = math.max(maxX, corner.X)
+                maxY = math.max(maxY, corner.Y)
+            end
+
+            box.Size = Vector2.new(maxX - minX, maxY - minY)
+            box.Position = Vector2.new(minX, minY)
+
+            nameText.Position = Vector2.new((minX + maxX) / 2, minY - 15)
+            nameText.Text = player.Name
+
+            local distance = math.floor((game.Players.LocalPlayer.Character.HumanoidRootPart.Position - character.HumanoidRootPart.Position).Magnitude)
+            distanceText.Position = Vector2.new((minX + maxX) / 2, maxY + 5)
+            distanceText.Text = tostring(distance) .. " studs"
+
+            -- Update ESP color dynamically
+            box.Color = espColor
+            nameText.Color = espColor
+            distanceText.Color = espColor
+
+            box.Visible = boxEnabled
+            nameText.Visible = nameEnabled
+            distanceText.Visible = distanceEnabled
+        else
+            box.Visible = false
+            nameText.Visible = false
+            distanceText.Visible = false
+        end
+    end
+end
+
+local connection
+
+-- ESP Toggle
+Section:createToggle({
+    text = "Box ESP",
+    state = false,
+    callback = function(state)
+        boxEnabled = state
+        if not boxEnabled and not distanceEnabled and not nameEnabled then
+            if connection then
+                connection:Disconnect()
+                connection = nil
+            end
+            for _, box in pairs(espBoxes) do
+                box.Visible = false
+            end
+        elseif connection == nil then
+            connection = game:GetService("RunService").RenderStepped:Connect(UpdateESP)
+        end
+    end
+})
+
+Section:createToggle({
+    text = "Name ESP",
+    state = false,
+    callback = function(state)
+        nameEnabled = state
+        if not boxEnabled and not distanceEnabled and not nameEnabled then
+            if connection then 
+                connection:Disconnect()
+                connection = nil
+            end
+            for _, text in pairs(espNames) do
+                text.Visible = false
+            end
+        elseif connection == nil then
+            connection = game:GetService("RunService").RenderStepped:Connect(UpdateESP)
+        end
+    end
+})
+
+Section:createToggle({
+    text = "Distance ESP",
+    state = false,
+    callback = function(state)
+        distanceEnabled = state
+        if not boxEnabled and not distanceEnabled and not nameEnabled then
+            if connection then 
+                connection:Disconnect()
+                connection = nil
+            end
+            for _, text in pairs(espDistances) do
+                text.Visible = false
+            end
+        elseif connection == nil then
+            connection = game:GetService("RunService").RenderStepped:Connect(UpdateESP)
+        end
+    end
+})
+
+
+Section:createPicker({
+    text = "ESP Color",
+    default = Color3.fromRGB(255, 255, 255),
+    callback = function(color)
+        espColor = color -- Update ESP color when picker value changes
+        print("Updated ESP Color: ", tostring(color))
+    end
+})
+
+Section:createDropdown({
+	text = "Esp Font (Broken)",
+	list = {"Defualt", "System"},
+	default = {"Defualt"},
+	multiple = false, -- choose multiple from list, makes callback value return a table now
+	callback = function(value)
+		print(value)
+	end
+}) -- :getList() (returns the list you provided, not the value), :getValue(), :updateList({list = {1,2,3}, default = {1, 2}})
+
+
+
+local Section = Page1:createSection({
+	text = "Hitbox",
+	position = "Right",
+})
+
+
+
+
+
+
+
+local Tab = Library:createTab({
+	text = "Teleports",
+	icon = "124718082122263", -- 20x20 icon you want here
+})
+
+local Page1 = Tab:createSubTab({
+	text = "Teleports",
+	sectionStyle = "Double", -- Make the page a single section style or double, "Single", "Double"
+})
+
+local Section = Page1:createSection({
+	text = "World 1 (In Order)",
+	position = "Left",
+})
+
+Section:createButton({
+	text = "TP To Start",
+	callback = function()
+	local TS = game:GetService("TweenService")
+	local tween = TS:Create(game.Players.LocalPlayer.Character.HumanoidRootPart, TweenInfo.new(2), {CFrame = CFrame.new(-60.2037964, 519.67395, 119.374817)})
+	tween:Play()
+		print("TP Successful")
+	end
+})
+
+Section:createButton({
+	text = "Ghost Town",
+	callback = function()
+	local TS = game:GetService("TweenService")
+	local tween = TS:Create(game.Players.LocalPlayer.Character.HumanoidRootPart, TweenInfo.new(2), {CFrame = CFrame.new(-54.6501656, -1867.25793, 6721.30078)})
+	tween:Play()
+		print("TP Successful")
+	end
+})
+
+Section:createButton({
+	text = "Overgrowth",
+	callback = function()
+	local TS = game:GetService("TweenService")
+	local tween = TS:Create(game.Players.LocalPlayer.Character.HumanoidRootPart, TweenInfo.new(2), {CFrame = CFrame.new(27.842453, -2475.08618, 9987.08203)})
+	tween:Play()
+		print("TP Successful")
+	end
+})
+
+Section:createButton({
+	text = "The Climb",
+	callback = function()
+	local TS = game:GetService("TweenService")
+	local tween = TS:Create(game.Players.LocalPlayer.Character.HumanoidRootPart, TweenInfo.new(2), {CFrame = CFrame.new(-70.1741333, -3095.54932, 13565.9355)})
+	tween:Play()
+		print("TP Successful")
+	end
+})
+
+Section:createButton({
+	text = "Military Base",
+	callback = function()
+	local TS = game:GetService("TweenService")
+	local tween = TS:Create(game.Players.LocalPlayer.Character.HumanoidRootPart, TweenInfo.new(2), {CFrame = CFrame.new(-73.6486893, -2704.3313, 15681.9014)})
+	tween:Play()
+		print("TP Successful")
+	end
+})
+
+Section:createButton({
+	text = "Dried Up",
+	callback = function()
+	local TS = game:GetService("TweenService")
+	local tween = TS:Create(game.Players.LocalPlayer.Character.HumanoidRootPart, TweenInfo.new(2), {CFrame = CFrame.new(-118.637238, -2626.89673, 16613.2734)})
+	tween:Play()
+		print("TP Successful")
+	end
+})
+
+Section:createButton({
+	text = "Minefield",
+	callback = function()
+	local TS = game:GetService("TweenService")
+	local tween = TS:Create(game.Players.LocalPlayer.Character.HumanoidRootPart, TweenInfo.new(2), {CFrame = CFrame.new(-90.4343491, -3043.98608, 18589.5098)})
+	tween:Play()
+		print("TP Successful")
+	end
+})
+
+Section:createButton({
+	text = "Warzone",
+	callback = function()
+	local TS = game:GetService("TweenService")
+	local tween = TS:Create(game.Players.LocalPlayer.Character.HumanoidRootPart, TweenInfo.new(2), {CFrame = CFrame.new(40.2499313, -3289.87598, 21757.043)})
+	tween:Play()
+		print("TP Successful")
+	end
+})
+
+Section:createButton({
+	text = "Surfacing",
+	callback = function()
+	local TS = game:GetService("TweenService")
+	local tween = TS:Create(game.Players.LocalPlayer.Character.HumanoidRootPart, TweenInfo.new(2), {CFrame = CFrame.new(-63.1397743, -3020.9458, 23270.957)})
+	tween:Play()
+		print("TP Successful")
+	end
+})
+
+Section:createButton({
+	text = "The Entrance",
+	callback = function()
+	local TS = game:GetService("TweenService")
+	local tween = TS:Create(game.Players.LocalPlayer.Character.HumanoidRootPart, TweenInfo.new(2), {CFrame = CFrame.new(-80.0545959, -2546.55054, 24920.9082)})
+	tween:Play()
+		print("TP Successful")
+	end
+})
+
+Section:createButton({
+	text = "Finish Line",
+	callback = function()
+	local TS = game:GetService("TweenService")
+	local tween = TS:Create(game.Players.LocalPlayer.Character.HumanoidRootPart, TweenInfo.new(2), {CFrame = CFrame.new(-72.7337723, -2702.11865, 26828.6191)})
+	tween:Play()
+		print("TP Successful")
+	end
+})
+
+
+local Section = Page1:createSection({
+	text = "World 2 (In Order)",
+	position = "Right",
+})
+
+Section:createButton({
+	text = "Booth (Start)",
+	callback = function()
+	local TS = game:GetService("TweenService")
+	local tween = TS:Create(game.Players.LocalPlayer.Character.HumanoidRootPart, TweenInfo.new(2), {CFrame = CFrame.new(-112.875137, 1359.06006, 823.830994)})
+	tween:Play()
+		print("TP Successful")
+	end
+})
+
+Section:createButton({
+	text = "Terrace",
+	callback = function()
+	local TS = game:GetService("TweenService")
+	local tween = TS:Create(game.Players.LocalPlayer.Character.HumanoidRootPart, TweenInfo.new(2), {CFrame = CFrame.new(-39.1056938, 729.242859, 5610.9248)})
+	tween:Play()
+		print("TP Successful")
+	end
+})
+
+Section:createButton({
+	text = "Storage",
+	callback = function()
+	local TS = game:GetService("TweenService")
+	local tween = TS:Create(game.Players.LocalPlayer.Character.HumanoidRootPart, TweenInfo.new(2), {CFrame = CFrame.new(-26.5946655, -166.40567, 10072.5342)})
+	tween:Play()
+		print("TP Successful")
+	end
+})
+
+Section:createButton({
+	text = "Refinery",
+	callback = function()
+	local TS = game:GetService("TweenService")
+	local tween = TS:Create(game.Players.LocalPlayer.Character.HumanoidRootPart, TweenInfo.new(2), {CFrame = CFrame.new(52.3096046, -201.983597, 10966.8311)})
+	tween:Play()
+		print("TP Successful")
+	end
+})
+
+Section:createButton({
+	text = "Great Dunes",
+	callback = function()
+	local TS = game:GetService("TweenService")
+	local tween = TS:Create(game.Players.LocalPlayer.Character.HumanoidRootPart, TweenInfo.new(2), {CFrame = CFrame.new(-95.8199692, -492.043152, 13761.1865)})
+	tween:Play()
+		print("TP Successful")
+	end
+})
+
+Section:createButton({
+	text = "Great Jump",
+	callback = function()
+	local TS = game:GetService("TweenService")
+	local tween = TS:Create(game.Players.LocalPlayer.Character.HumanoidRootPart, TweenInfo.new(2), {CFrame = CFrame.new(-71.049614, -900.155823, 18390.2461)})
+	tween:Play()
+		print("TP Successful")
+	end
+})
+
+Section:createButton({
+	text = "Derelict",
+	callback = function()
+	local TS = game:GetService("TweenService")
+	local tween = TS:Create(game.Players.LocalPlayer.Character.HumanoidRootPart, TweenInfo.new(2), {CFrame = CFrame.new(-179.497986, -3555.21777, 21144.2715)})
+	tween:Play()
+		print("TP Successful")
+	end
+})
+
+Section:createButton({
+	text = "Gas Station",
+	callback = function()
+	local TS = game:GetService("TweenService")
+	local tween = TS:Create(game.Players.LocalPlayer.Character.HumanoidRootPart, TweenInfo.new(2), {CFrame = CFrame.new(-134.039841, -3705.29736, 23090.4941)})
+	tween:Play()
+		print("TP Successful")
+	end
+})
+
+Section:createButton({
+	text = "Lost Coast",
+	callback = function()
+	local TS = game:GetService("TweenService")
+	local tween = TS:Create(game.Players.LocalPlayer.Character.HumanoidRootPart, TweenInfo.new(2), {CFrame = CFrame.new(-106.033722, -4494.42676, 25623.0078)})
+	tween:Play()
+		print("TP Successful")
+	end
+})
+
+Section:createButton({
+	text = "Hares Bane",
+	callback = function()
+	local TS = game:GetService("TweenService")
+	local tween = TS:Create(game.Players.LocalPlayer.Character.HumanoidRootPart, TweenInfo.new(2), {CFrame = CFrame.new(-147.868332, -4686.41455, 27523.1445)})
+	tween:Play()
+		print("TP Successful")
+	end
+})
+
+Section:createButton({
+	text = "Motor Court",
+	callback = function()
+	local TS = game:GetService("TweenService")
+	local tween = TS:Create(game.Players.LocalPlayer.Character.HumanoidRootPart, TweenInfo.new(2), {CFrame = CFrame.new(-84.1018829, -5876.55762, 30870.7617)})
+	tween:Play()
+		print("TP Successful")
+	end
+})
+
+Section:createButton({
+	text = "Rifts",
+	callback = function()
+	local TS = game:GetService("TweenService")
+	local tween = TS:Create(game.Players.LocalPlayer.Character.HumanoidRootPart, TweenInfo.new(2), {CFrame = CFrame.new(-37.2754822, -6051.90381, 33590.3359)})
+	tween:Play()
+		print("TP Successful")
+	end
+})
+
+Section:createButton({
+	text = "Finish Line",
+	callback = function()
+	local TS = game:GetService("TweenService")
+	local tween = TS:Create(game.Players.LocalPlayer.Character.HumanoidRootPart, TweenInfo.new(2), {CFrame = CFrame.new(-171.900177, -6118.59863, 36762.4336)})
+	tween:Play()
+		print("TP Successful")
+	end
+})
+
+
+local Section = Page1:createSection({
+	text = "World 3 (In Order)",
+	position = "Left",
+})
+
+Section:createButton({
+	text = "Bluffs (Start)",
+	callback = function()
+	local TS = game:GetService("TweenService")
+	local tween = TS:Create(game.Players.LocalPlayer.Character.HumanoidRootPart, TweenInfo.new(2), {CFrame = CFrame.new(-1631.34424, 512.004272, 338.663391)})
+	tween:Play()
+		print("TP Successful")
+	end
+})
+
+Section:createButton({
+	text = "Ledge",
+	callback = function()
+	local TS = game:GetService("TweenService")
+	local tween = TS:Create(game.Players.LocalPlayer.Character.HumanoidRootPart, TweenInfo.new(2), {CFrame = CFrame.new(-1583.54492, -562.430969, 7115.1123)})
+	tween:Play()
+		print("TP Successful")
+	end
+})
+
+Section:createButton({
+	text = "Main Dam",
+	callback = function()
+	local TS = game:GetService("TweenService")
+	local tween = TS:Create(game.Players.LocalPlayer.Character.HumanoidRootPart, TweenInfo.new(2), {CFrame = CFrame.new(-1708.85095, -1462.73975, 9402.86914)})
+	tween:Play()
+		print("TP Successful")
+	end
+})
+
+Section:createButton({
+	text = "Depo",
+	callback = function()
+	local TS = game:GetService("TweenService")
+	local tween = TS:Create(game.Players.LocalPlayer.Character.HumanoidRootPart, TweenInfo.new(2), {CFrame = CFrame.new(-1706.62061, -2151.83057, 13048.2793)})
+	tween:Play()
+		print("TP Successful")
+	end
+})
+
+Section:createButton({
+	text = "Run Off",
+	callback = function()
+	local TS = game:GetService("TweenService")
+	local tween = TS:Create(game.Players.LocalPlayer.Character.HumanoidRootPart, TweenInfo.new(2), {CFrame = CFrame.new(-1591.776, -2449.75439, 16475.4668)})
+	tween:Play()
+		print("TP Successful")
+	end
+})
+
+Section:createButton({
+	text = "Processing Area",
+	callback = function()
+	local TS = game:GetService("TweenService")
+	local tween = TS:Create(game.Players.LocalPlayer.Character.HumanoidRootPart, TweenInfo.new(2), {CFrame = CFrame.new(-1566.55115, -3369.04907, 20986.75)})
+	tween:Play()
+		print("TP Successful")
+	end
+})
+
+Section:createButton({
+	text = "Super Processer",
+	callback = function()
+	local TS = game:GetService("TweenService")
+	local tween = TS:Create(game.Players.LocalPlayer.Character.HumanoidRootPart, TweenInfo.new(2), {CFrame = CFrame.new(-1549.51733, -3355.8064, 26545.1875)})
+	tween:Play()
+		print("TP Successful")
+	end
+})
+
+Section:createButton({
+	text = "Finish Line",
+	callback = function()
+	local TS = game:GetService("TweenService")
+	local tween = TS:Create(game.Players.LocalPlayer.Character.HumanoidRootPart, TweenInfo.new(2), {CFrame = CFrame.new(-1603.66296, -4236.74316, 30089.0977)})
+	tween:Play()
+		print("TP Successful")
+	end
+})
+
+
+local Tab = Library:createTab({
+	text = "Shop",
+	icon = "124718082122263", -- 20x20 icon you want here
+})
+
+local Page1 = Tab:createSubTab({
+	text = "Shop",
+	sectionStyle = "Double", -- Make the page a single section style or double, "Single", "Double"
+})
+
+local Section = Page1:createSection({
+	text = "Shop",
+	position = "Left",
+})
+
+
+local Tab = Library:createTab({
+	text = "Misc",
+	icon = "124718082122263", -- 20x20 icon you want here
+})
+
+local Page1 = Tab:createSubTab({
+	text = "Misc",
+	sectionStyle = "Double", -- Make the page a single section style or double, "Single", "Double"
+})
+
+local Section = Page1:createSection({
+	text = "Misc",
+	position = "Left",
+})
+
+Section:createToggle({
+	text = "Toggle 1",
+	state = false,
+	callback = function(state)
+		print(state)
+	end
+}) -- :getState(), :updateState({state = true})
+
+Section:createKeybind({
+	onHeld = false,
+	text = "Keybind 1",
+	default = "RightBracket",
+	callback = function(keyName)
+		print(keyName)
+	end
+}) -- :getKeybind(), :updateKeybind({bind = "LeftShift"})
+
+Section:createSlider({
+	text = "Slider 1",
+	min = 0,
+	max = 100,
+	step = 1,
+	callback = function(value)
+		print(value)
+	end
+}) -- :getValue(), :updateValue({value = 100})
+
+Section:createPicker({
+	text = "ColorPicker 1",
+	default = Color3.fromRGB(255, 255, 255),
+	callback = function(color)
+		print(color)
+	end
+}) -- :getColor(), :updateColor({color = Color3.fromRGB(255, 255, 0)})
+
+Section:createDropdown({
+	text = "Dropdown 1",
+	list = {"Hello", "World!"},
+	default = {"Hello"},
+	multiple = false, -- choose multiple from list, makes callback value return a table now
+	callback = function(value)
+		print(value)
+	end
+}) -- :getList() (returns the list you provided, not the value), :getValue(), :updateList({list = {1,2,3}, default = {1, 2}})
+
+Section:createDropdown({
+	text = "Multiselect Dropdown",
+	list = {1,2,3,4,5},
+	default = {1,2},
+	multiple = true,
+	callback = function(value)
+		print(unpack(value))
+	end
+})
+
+Section:createButton({
+	text = "Button 1",
+	callback = function()
+		print("this is a button")
+	end
+})
+
+Section:createTextBox({
+	text = "TextBox 1",
+	default = "hi",
+	callback = function(text)
+		print(text)
+	end,
+}) -- :getText(), :updateText({text = "bro"})
+
+
+-- Addon example
+local Toggle = Section:createToggle({
+	text = "Toggle 2",
+	state = false,
+	callback = function(state)
+		print(state)
+	end
+})
+
+-- Takes in same parameters/arguments as above
+Toggle:createPicker({})
+Toggle:createSlider({})
+Toggle:createDropdown({})
+Toggle:createToggle({})
+
+-- Flags example
+print(shared.Flags.Toggle["Toggle 1"]:getState()) -- refers to the {text = "Toggle 1"} you set for the element
+
+-- Creates the theme changer, config manager, etc
+Library:createManager({
+	folderName = "brah",
+	icon = "124718082122263", -- 20x20 icon you want here
+})
